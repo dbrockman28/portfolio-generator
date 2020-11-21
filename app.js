@@ -1,3 +1,4 @@
+const { truncate } = require("fs");
 const inquirer = require("inquirer");
 const { animationFrameScheduler } = require("rxjs");
 
@@ -30,9 +31,22 @@ return inquirer.prompt([
       }
     },
     {
+      type: "confirm",
+      name: "confirmAbout",
+      message: "Would you like to include some informations about yourself for an about section?",
+      default: true
+    },
+    {
       type: "input",
       name: "about",
-      message: "Provide some information about yourself:"
+      message: "Provide some information about yourself:",
+      when: ({confirmAbout}) => {
+        if (confirmAbout) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     }
   ]);
 };
